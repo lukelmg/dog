@@ -32,23 +32,23 @@ void setup()
 
   ////////////////////////
 
-  frontLeftTop.write(162);
-  backLeftTop.write(165);
+  frontLeftTop.write(160);
+  backLeftTop.write(160);
   
   frontRightTop.write(0);
   backRightTop.write(0);
 
   ///////////////////////////
   
-  frontLeftBottom.write(50);
-  backLeftBottom.write(65);
+  frontLeftBottom.write(70);
+  backLeftBottom.write(70);
   
-  frontRightBottom.write(95);
+  frontRightBottom.write(110);
   backRightBottom.write(110);
 
   //////////////////////////
   
-  delay(2000);
+  delay(5000);
 }
 
 int timeBetweenWalks = 0;
@@ -62,31 +62,29 @@ void loop()
 }
 
 void walk1(){
-  frontLeftBottom.write(0);
-  backRightBottom.write(180);
+  frontLeftBottom.write(50);
+  backRightBottom.write(130);
   delay(100);
-  frontLeftTop.write(100);
-  backRightTop.write(30);
-  delay(50);
-  frontLeftBottom.write(40);
-  backRightBottom.write(90);
+  frontLeftTop.write(140);
+  backRightTop.write(20);
   delay(100);
-  frontLeftTop.write(163);
+  frontLeftTop.write(160);
   backRightTop.write(0);
+  frontLeftBottom.write(70);
+  backRightBottom.write(110);
 }
 
 void walk2(){
-  frontRightBottom.write(175);
-  backLeftBottom.write(15);
+  frontRightBottom.write(130);
+  backLeftBottom.write(50);
   delay(100);
-  frontRightTop.write(30);
-  backLeftTop.write(100);
-  delay(50);
-  frontRightBottom.write(100);
-  backLeftBottom.write(75);
+  frontRightTop.write(20);
+  backLeftTop.write(140);
   delay(100);
+  frontRightBottom.write(110);
+  backLeftBottom.write(70);
   frontRightTop.write(0);
-  backLeftTop.write(163);
+  backLeftTop.write(160);
 }
 
 void startingUpTone() {
