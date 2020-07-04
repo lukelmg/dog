@@ -1,14 +1,14 @@
 #include <Servo.h>
 
-Servo frontLeftTop;  // create servo object to control a servo
-Servo frontRightTop;
-Servo backLeftTop;
-Servo backRightTop;
+Servo frontLeftTopServo;  // create servo object to control a servo
+Servo frontRightTopServo;
+Servo backLeftTopServo;
+Servo backRightTopServo;
 
-Servo frontLeftBottom;
-Servo frontRightBottom;
-Servo backLeftBottom;
-Servo backRightBottom;
+Servo frontLeftBottomServo;
+Servo frontRightBottomServo;
+Servo backLeftBottomServo;
+Servo backRightBottomServo;
 
 int state = 0;
 int runOnce = 0;
@@ -16,130 +16,111 @@ int runOnce2 = 1;
 
 void setup()
 {
-  Serial.begin(115200);  //start Serial in case we need to print debugging info
+  Serial.begin(9600);  //start Serial in case we need to print debugging info
   pinMode(2, INPUT_PULLUP);
   pinMode(12, OUTPUT);
-  
-  frontLeftTop.attach(12);
-  frontRightTop.attach(13);
-  backLeftTop.attach(11);
-  backRightTop.attach(10);
 
-  frontLeftBottom.attach(7);
-  frontRightBottom.attach(6);
-  backLeftBottom.attach(5);
-  backRightBottom.attach(2);
+  frontLeftTopServo.attach(12);
+  frontRightTopServo.attach(13);
+  backLeftTopServo.attach(11);
+  backRightTopServo.attach(10);
 
-  ////////////////////////
+  frontLeftBottomServo.attach(7);
+  frontRightBottomServo.attach(6);
+  backLeftBottomServo.attach(5);
+  backRightBottomServo.attach(2);
 
-  frontLeftTop.write(160);
-  backLeftTop.write(160);
-  
-  frontRightTop.write(0);
-  backRightTop.write(0);
+  frontLeftTop(25);
+  backLeftTop(55);
+  frontRightTop(25);
+  backRightTop(55);
 
-  ///////////////////////////
-  
-  frontLeftBottom.write(70);
-  backLeftBottom.write(70);
-  
-  frontRightBottom.write(110);
-  backRightBottom.write(110);
+  frontLeftBottom(0);
+  backLeftBottom(0);
+  frontRightBottom(0);
+  backRightBottom(0);
 
-  //////////////////////////
-  
-  delay(5000);
+
+  delay(3000);
 }
 
-int timeBetweenWalks = 0;
+int timeBetweenWalk = 0;
 
 void loop()
-{ 
-  walk1();
-  delay(timeBetweenWalks);
-  walk2();
-  delay(timeBetweenWalks);
+{
+ 
+ walk1();
+ delay(timeBetweenWalk);
+ walk2();
+ delay(timeBetweenWalk);
+ 
 }
 
-void walk1(){
-  frontLeftBottom.write(50);
-  backRightBottom.write(130);
+void walk1() {
+  backLeftTop(45);
+  frontRightTop(45);
+  backLeftBottom(-10+30);
+  frontRightBottom(-10 + 30);
   delay(100);
-  frontLeftTop.write(140);
-  backRightTop.write(20);
+  backLeftBottom(-28+30);
+  frontRightBottom(-28+30);
   delay(100);
-  frontLeftTop.write(160);
-  backRightTop.write(0);
-  frontLeftBottom.write(70);
-  backRightBottom.write(110);
+  backLeftTop(75);
+  frontRightTop(75);
 }
 
-void walk2(){
-  frontRightBottom.write(130);
-  backLeftBottom.write(50);
+void walk2() {
+  backRightTop(45);
+  frontLeftTop(45);
+  backRightBottom(-10+30);
+  frontLeftBottom(-10+30);
   delay(100);
-  frontRightTop.write(20);
-  backLeftTop.write(140);
+  backRightBottom(-28+30);
+  frontLeftBottom(-28+30);
   delay(100);
-  frontRightBottom.write(110);
-  backLeftBottom.write(70);
-  frontRightTop.write(0);
-  backLeftTop.write(160);
+  backRightTop(75);
+  frontLeftTop(75);
 }
 
-void startingUpTone() {
-  tone(12, 220);
-  delay(250);
-  noTone(12);
-  delay(50);
-  tone(12, 220);
-  delay(25);
-  tone(12, 261);
-  delay(250);
-  tone(12, 329);
-  delay(250);
-  noTone(12);
-  runOnce = 1;
+void bottoms(int frontLeft, int frontRight, int backLeft, int backRight) {
+  frontLeftBottom(frontLeft);
+  backLeftBottom(backLeft);
+  frontRightBottom(frontRight);
+  backRightBottom(backRight);
 }
 
-void shuttingDownTone() {
-  tone(12, 329);
-  delay(250);
-  noTone(12);
-  delay(50);
-  tone(12, 329);
-  delay(25);
-  tone(12, 261);
-  delay(250);
-  tone(12, 220);
-  delay(250);
-  noTone(12);
-  runOnce2 = 1;
+void frontLeftTop(int input) {
+  frontLeftTopServo.write((input * -1) + 200);
+  Serial.println(input + 10);
 }
 
-
-void frontLeftWalk() {
-  frontLeftTop.write(180);
-  frontLeftBottom.write(60);
-  delay(500);
-  frontLeftTop.write(150);
-  frontLeftBottom.write(30);
-  delay(500);
+void frontRightTop(int input) {
+  frontRightTopServo.write(input - 35);
+  //Serial.println((-input) + 150);
 }
 
-
-/*
-
-void frontLeftWalk() {
-  frontLeftTop.write(180);
-  frontLeftBottom.write(60);
-  delay(2000);
-  frontLeftBottom.write(0);
-  delay(500);
-  frontLeftTop.write(50);
-  delay(500);
-  frontLeftBottom.write(0);
-  delay(1000);
+void backLeftTop(int input) {
+  backLeftTopServo.write((-input) + 155);
+  //Serial.println((-input) + 155);
 }
 
-*/
+void backRightTop(int input) {
+  backRightTopServo.write((input * 1.09) + 19);
+  //Serial.println((input * 1.09) + 19);
+}
+
+void frontLeftBottom(int input) {
+  frontLeftBottomServo.write(input + 65);
+}
+
+void frontRightBottom(int input) {
+  frontRightBottomServo.write((input * -0.946) + 108);
+}
+
+void backLeftBottom(int input) {
+  backLeftBottomServo.write(input + 55);
+}
+
+void backRightBottom(int input) {
+  backRightBottomServo.write((input * -0.946) + 108);
+}
